@@ -1,0 +1,59 @@
+module Semaforo {
+
+  // Define os estados do semáforo
+  type Estado = {
+    Vermelho,
+    Amarelo,
+    Verde
+  };
+
+  // Define as ações do semáforo
+  action MudarParaVermelho() {
+    assert(estado == Verde);
+    estado := Vermelho;
+  }
+
+  action MudarParaAmarelo() {
+    assert(estado == Vermelho);
+    estado := Amarelo;
+  }
+
+  action MudarParaVerde() {
+    assert(estado == Amarelo);
+    estado := Verde;
+  }
+
+  // Define o estado inicial do semáforo
+  init {
+    estado := Vermelho;
+  }
+
+  // Define as invariantes do semáforo
+  invariant {
+    estado in {Vermelho, Amarelo, Verde};
+  }
+}
+
+module Teste {
+  import Semaforo;
+
+  main() {
+    // Muda o semáforo para Verde
+    MudarParaVerde();
+
+    // Verifica se o estado do semáforo é Verde
+    assert(estado == Verde);
+
+    // Muda o semáforo para Amarelo
+    MudarParaAmarelo();
+
+    // Verifica se o estado do semáforo é Amarelo
+    assert(estado == Amarelo);
+
+    // Muda o semáforo para Vermelho
+    MudarParaVermelho();
+
+    // Verifica se o estado do semáforo é Vermelho
+    assert(estado == Vermelho);
+  }
+}
